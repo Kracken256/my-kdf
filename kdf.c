@@ -5,14 +5,14 @@
 
 int main(int argc, char *argv[])
 {
-    int desired_len = 32;
+    long desired_len = 32;
     for (int i = 0; i < argc; i++)
     {
         if (strcmp(argv[i], "-l") == 0)
         {
             if (argc > i + 1)
             {
-                desired_len = atoi(argv[i + 1]);
+                desired_len = atol(argv[i + 1]);
             }
             else
             {

@@ -3,6 +3,7 @@ This code is a custom blazing-fast key derivation function for embedded systems.
 
 This algorithm generated a 1 GB key in 9 seconds on my PC VM. 
 This could also be used as a stream cipher.
+The minimum input key length is 5 chars.
 
 # Compile
 ```sh

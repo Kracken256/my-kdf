@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 // This is the magic
-char *derive_key(char *key_seed, int key_len, int desired_len)
+char *derive_key(char *key_seed, long key_len, long desired_len)
 {
     char *buffer = calloc(desired_len, sizeof(char));
     if (buffer == NULL)
@@ -12,16 +12,19 @@ char *derive_key(char *key_seed, int key_len, int desired_len)
         puts("Malloc Error.\n");
         return NULL;
     }
-    if (key_len == 0)
+    if (key_len < 5)
     {
         return NULL;
     }
+    // Define initial state
     uint64_t state = key_seed[0] * desired_len * key_len;
-    for (int i = 0; i < key_len; i++)
+    // Absord key into initial state.
+    for (long i = 0; i < key_len; i++)
     {
         state *= key_seed[i];
     }
-    for (int i = 0; i < desired_len; i++)
+    // Expand state into n bytes.
+    for (long i = 0; i < desired_len; i++)
     {
         state ^= key_seed[i % key_len] * key_seed[(uint64_t)(i ^ state) % key_len] ^ desired_len * i;
         buffer[i] = (char)(state % 256);
